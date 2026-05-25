@@ -3,7 +3,46 @@ type RateBucket = {
   resetAt: number;
 };
 
+// The Cloudflare rate-limit binding is the primary protection. This in-memory
+// map is only the fallback used in development, preview, and binding-miss
+// paths. It must not grow without bound when many unique client keys appear,
+// so expired buckets are pruned opportunistically and a conservative cap with
+// oldest-first eviction guards against pathological key churn.
+const MAX_RATE_BUCKETS = 10_000;
+
 const rateBuckets = new Map<string, RateBucket>();
+
+function pruneExpiredRateBuckets(now: number) {
+  for (const [key, bucket] of rateBuckets) {
+    if (bucket.resetAt <= now) {
+      rateBuckets.delete(key);
+    }
+  }
+}
+
+function evictOldestRateBuckets() {
+  // Map iteration is insertion-ordered, so the leading entries are the oldest.
+  while (rateBuckets.size >= MAX_RATE_BUCKETS) {
+    const oldestKey = rateBuckets.keys().next().value;
+    if (oldestKey === undefined) break;
+    rateBuckets.delete(oldestKey);
+  }
+}
+
+/**
+ * Test-only helpers for the in-memory fallback rate limiter. These are not part
+ * of the production request path and exist so deterministic tests can reset and
+ * inspect bucket state without widening the public API surface.
+ */
+export const __rateLimitTestHooks = {
+  reset() {
+    rateBuckets.clear();
+  },
+  size() {
+    return rateBuckets.size;
+  },
+  maxBuckets: MAX_RATE_BUCKETS,
+};
 
 const ALLOWED_ORIGIN_PATTERNS = [
   /^https:\/\/heyclau\.de$/i,
@@ -96,6 +135,12 @@ export function isRateLimited(params: {
   const current = rateBuckets.get(bucketKey);
 
   if (!current || current.resetAt <= now) {
+    // A fresh or expired key means we are about to grow (or refresh) the map.
+    // Reclaim everything that has aged out, then enforce the hard cap before
+    // inserting so old keys that never return cannot accumulate forever.
+    pruneExpiredRateBuckets(now);
+    rateBuckets.delete(bucketKey);
+    evictOldestRateBuckets();
     rateBuckets.set(bucketKey, { count: 1, resetAt: now + windowMs });
     return false;
   }
