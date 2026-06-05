@@ -1,0 +1,141 @@
+---
+title: Zero Data Retention Compliance Agent
+slug: zero-data-retention-compliance-agent
+category: agents
+description: >-
+  Source-backed agent that reviews a Claude Code deployment for zero-data-
+  retention and data-handling expectations, checking telemetry, logging, credential
+  storage, sandbox read scope, and third-party data flow, and flagging anything
+  that conflicts with a ZDR posture, grounded in the official docs.
+cardDescription: >-
+  Review a Claude Code deployment against zero-data-retention expectations:
+  telemetry, logging, credential storage, and data flow.
+seoTitle: Zero Data Retention Compliance Agent for Claude Code
+seoDescription: >-
+  Reusable agent prompt that audits a Claude Code deployment against zero-data-
+  retention expectations, checking telemetry, logging, credential storage,
+  sandbox read scope, and third-party data flow, grounded in official docs.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent to review a Claude Code deployment against zero-data-retention and data-handling expectations, surfacing telemetry, logging, and data-flow that could conflict with a ZDR posture."
+prerequisites:
+  - "Knowledge of your organization's data-retention requirements and which provider agreement (direct API, Bedrock, Vertex, Foundry) applies."
+  - "Access to the Claude Code settings, environment variables, and any telemetry or logging configuration in use."
+  - "An owner who can change configuration and accept residual risk."
+safetyNotes:
+  - "This agent performs editorial data-handling triage; it does not provide legal advice and cannot certify contractual ZDR guarantees."
+  - "Escalate retention, training-use, and contractual questions to the responsible provider agreement and a qualified human reviewer."
+  - "Flag configuration that writes transcripts, telemetry, or logs to locations outside the intended retention boundary."
+privacyNotes:
+  - "Identify where conversation data goes: the model provider endpoint, local transcripts, OpenTelemetry exporters, and any hooks or MCP servers."
+  - "Telemetry is opt-in via an enable flag and exporters; confirm whether it is on and where metrics, logs, and events are sent."
+  - "Credentials are stored outside settings (OS keychain or a protected file); confirm no secrets are written into transcripts, logs, or shared context."
+  - "Keep retention claims tied to current configuration and the applicable provider agreement; if retention is unknown, say unknown and require a decision."
+tags:
+  - claude-code
+  - compliance
+  - data-retention
+  - privacy
+  - review
+keywords:
+  - zero data retention compliance agent
+  - claude code zdr
+  - claude code data retention review
+  - claude code telemetry audit
+  - claude code privacy compliance
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+Zero Data Retention Compliance Agent is a reusable agent prompt for reviewing a
+Claude Code deployment against zero-data-retention and data-handling
+expectations. It maps where conversation data goes, checks telemetry, logging,
+and credential handling, and flags configuration that conflicts with a ZDR
+posture, while leaving contractual certification to humans.
+
+Use it when an organization with strict retention requirements adopts Claude Code
+and needs a repeatable data-flow review.
+
+## Agent Prompt
+
+You are a data-retention and data-handling reviewer for Claude Code deployments.
+Make data movement visible and flag anything that conflicts with a zero-data-
+retention posture. You do not give legal advice or certify contractual
+guarantees; you surface facts and escalate. Use the official Claude Code
+documentation as your reference.
+
+Review workflow:
+
+1. Provider path. Identify which provider serves inference (direct API, Bedrock,
+   Vertex, Foundry) because retention and ZDR terms follow that agreement.
+2. Telemetry. Check whether OpenTelemetry is enabled and which metrics, logs, and
+   events exporters are configured, and where they send data.
+3. Local artifacts. Identify transcripts, caches, and any disk-persisted tool
+   results that retain conversation or code data.
+4. Credentials. Confirm secrets live in the OS keychain or a protected file and
+   are never written into transcripts, logs, or shared context.
+5. Extensions. Treat MCP servers, hooks, and channels as data egress points and
+   list where they send data.
+6. Sandbox read scope. Note that the default read policy can still read
+   credential directories unless denied, which affects what could be captured.
+7. Decision. Summarize whether the deployment matches the intended retention
+   posture, what to change, and what must be escalated to the provider agreement
+   and a human.
+
+Output contract:
+
+- Data map: provider, telemetry exporters, local artifacts, extension egress.
+- Findings: configuration that retains or sends data beyond the intended boundary.
+- Required changes: disable or redirect telemetry, restrict reads, scope egress.
+- Escalation: contractual ZDR questions routed to the provider agreement and a
+  human reviewer.
+
+## Features
+
+- Maps Claude Code data flow across provider, telemetry, local artifacts, and
+  extensions.
+- Checks whether telemetry is enabled and where it exports.
+- Flags credential, transcript, and log handling that conflicts with ZDR.
+- Separates editorial review from contractual certification.
+
+## Use Cases
+
+- Review Claude Code for an organization with strict retention requirements.
+- Confirm telemetry and logging do not send data beyond an approved boundary.
+- Identify local transcripts and disk-persisted results that retain data.
+- Produce a data-flow summary to take to a contractual ZDR review.
+
+## Source Notes
+
+- Claude Code exposes OpenTelemetry metrics, logs, and events behind an enable
+  flag and configurable exporters, so telemetry is off unless turned on.
+- Credentials are stored outside settings in the OS keychain or a protected file,
+  and the provider path (direct API, Bedrock, Vertex, Foundry) determines which
+  data agreement applies.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for ZDR, data-retention, and
+compliance agents. No zero-data-retention agent exists. This entry is distinct: it
+is an `agents` prompt focused on reviewing a Claude Code deployment against
+zero-data-retention expectations.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code monitoring and OpenTelemetry docs: https://code.claude.com/docs/en/monitoring-usage
+- Claude Code authentication and identity docs: https://code.claude.com/docs/en/iam
