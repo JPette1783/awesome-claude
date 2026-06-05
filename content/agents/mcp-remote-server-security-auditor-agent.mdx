@@ -1,0 +1,134 @@
+---
+title: MCP Remote Server Security Auditor Agent
+slug: mcp-remote-server-security-auditor-agent
+category: agents
+description: >-
+  Source-backed agent that audits remote MCP servers before connection, checking
+  transport and TLS, authentication, tool authority and side effects, output
+  handling, and prompt-injection exposure, grounded in the official Claude Code
+  MCP docs and MCP security guidance.
+cardDescription: >-
+  Audit remote MCP servers before connecting: transport/TLS, auth, tool authority,
+  output handling, and prompt-injection exposure.
+seoTitle: MCP Remote Server Security Auditor Agent
+seoDescription: >-
+  Reusable agent prompt that audits remote MCP servers before connection,
+  checking transport and TLS, authentication, tool authority and side effects,
+  output handling, and prompt-injection exposure, grounded in official docs.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/mcp"
+installable: false
+usageSnippet: "Use this agent to audit a remote MCP server before connecting Claude Code to it, covering transport and TLS, authentication, tool authority, output handling, and prompt-injection exposure."
+prerequisites:
+  - "The remote MCP server's endpoint, transport (HTTP, SSE, or websocket), and authentication scheme."
+  - "Its tool list with input/output schemas and any documented side effects."
+  - "Knowledge of who operates the server and how trusted it is."
+safetyNotes:
+  - "This agent audits security posture; it does not itself connect to or exercise the server."
+  - "Treat untrusted remote servers as a prompt-injection and excessive-agency risk: their tool outputs can carry instructions and their tools can take actions."
+  - "Recommend connecting only over TLS, with least-privilege allow rules and confirmation for write tools."
+privacyNotes:
+  - "A remote MCP server receives whatever inputs tools are called with; confirm what data leaves your environment to it."
+  - "Authentication tokens for remote servers must be stored securely and not committed or logged."
+  - "Confirm the server's data handling and retention before sending sensitive context to it."
+tags:
+  - mcp
+  - claude-code
+  - security
+  - remote-server
+  - audit
+keywords:
+  - mcp remote server security auditor agent
+  - remote mcp server security
+  - mcp tls authentication
+  - mcp prompt injection
+  - mcp tool authority audit
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+MCP Remote Server Security Auditor Agent is a reusable agent prompt for auditing a
+remote MCP server before Claude Code connects to it. It checks the transport and
+TLS, authentication scheme, tool authority and side effects, output handling, and
+prompt-injection exposure, treating untrusted remote servers as an excessive-
+agency risk.
+
+Use it before adding a third-party remote MCP server, or when reviewing whether an
+existing remote connection is safe to keep.
+
+## Agent Prompt
+
+You are a security auditor for remote MCP servers used by Claude Code. Decide
+whether a remote server is safe to connect and under what limits. Use the official
+Claude Code MCP documentation and MCP security guidance as your reference.
+
+Audit workflow:
+
+1. Transport and TLS. Confirm the server uses a secure transport over TLS and a
+   valid endpoint.
+2. Authentication. Identify the scheme (header token or OAuth), token scope, and
+   how credentials are supplied and refreshed.
+3. Tool authority. Enumerate tools and classify read vs write vs destructive.
+   Treat broad or vague tools as higher risk.
+4. Output handling. Remember tool outputs are untrusted: they can contain
+   instructions (prompt injection) and large payloads. Recommend not auto-acting
+   on outputs and keeping result sizes bounded.
+5. Excessive agency. Recommend least-privilege allow rules, confirmation for write
+   tools, and disabling tools you do not need.
+6. Operator trust. Consider who runs the server, its data handling, and retention.
+7. Decision. Connect with limits, connect read-only, or do not connect.
+
+Output contract:
+
+- Server summary: endpoint, transport/TLS, auth, tool authority.
+- Findings: TLS/auth gaps, over-broad tools, injection or agency risk.
+- Recommended limits: allow rules, confirmation, disabled tools.
+- Decision: connect with limits, read-only, or reject.
+
+## Features
+
+- Audits remote MCP transport, TLS, and authentication.
+- Classifies tool authority and flags excessive agency.
+- Treats tool outputs as untrusted (prompt-injection aware).
+- Produces a connect/limit/reject decision with least-privilege limits.
+
+## Use Cases
+
+- Vet a third-party remote MCP server before connecting.
+- Decide whether to allow only read-only tools from a server.
+- Reduce prompt-injection and excessive-agency risk from remote tools.
+- Review an existing remote connection for safe configuration.
+
+## Source Notes
+
+- Claude Code MCP supports remote servers over HTTP, SSE, and websocket with
+  header-token and OAuth authentication, and stores tokens securely.
+- MCP security guidance treats tools as external actions and tool outputs as
+  untrusted content, recommending least privilege, confirmation, and output
+  handling care.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for MCP security, remote server, and
+auditor agents. No MCP remote server security auditor exists. This entry is
+distinct: it is an `agents` prompt focused on auditing remote MCP servers before
+connection.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation and MCP security guidance. No paid placement,
+referral, or affiliate relationship.
+
+## Sources
+
+- Claude Code MCP documentation: https://code.claude.com/docs/en/mcp
+- Model Context Protocol security best practices: https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices
+- Model Context Protocol tools specification: https://modelcontextprotocol.io/specification/2025-06-18/server/tools
