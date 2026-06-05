@@ -1,0 +1,132 @@
+---
+title: AI Agent Cost Governance Analyst Agent
+slug: ai-agent-cost-governance-analyst-agent
+category: agents
+description: >-
+  Source-backed agent that analyzes and governs Claude Code spend, attributing
+  token cost across users, projects, and tools from OpenTelemetry data and
+  proposing budgets, guardrails, and efficiency changes, grounded in the official
+  docs.
+cardDescription: >-
+  Analyze and govern Claude Code spend: attribute token cost from telemetry and
+  propose budgets, guardrails, and efficiency changes.
+seoTitle: AI Agent Cost Governance Analyst Agent for Claude Code
+seoDescription: >-
+  Reusable agent prompt that analyzes Claude Code token spend from OpenTelemetry,
+  attributes cost across users, projects, and tools, and proposes budgets,
+  guardrails, and efficiency changes, grounded in official documentation.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent to analyze Claude Code token spend from telemetry, attribute cost across users, projects, and tools, and propose budgets, guardrails, and efficiency changes."
+prerequisites:
+  - "Claude Code OpenTelemetry enabled with usage and cost metrics flowing to a backend you can query."
+  - "Knowledge of which teams, projects, or cost centers map to the usage."
+  - "Authority to propose budgets and guardrails for the organization."
+safetyNotes:
+  - "This agent analyzes cost and proposes governance; it does not change permissions or take destructive action."
+  - "Cost guardrails such as model selection or permission limits should preserve safety controls, not remove them to save money."
+  - "Budget enforcement that blocks work should be reviewed so it does not break critical pipelines unexpectedly."
+privacyNotes:
+  - "Cost analysis uses telemetry that can include user and project attribution; handle that data according to your internal policy."
+  - "Avoid exposing individual user usage in ways that conflict with workplace privacy expectations."
+  - "Reports can reference project names and workflows; keep secrets and sensitive identifiers out of them."
+tags:
+  - claude-code
+  - cost-governance
+  - finops
+  - observability
+  - analysis
+keywords:
+  - ai agent cost governance analyst agent
+  - claude code cost analysis
+  - claude code token spend
+  - claude code finops
+  - claude code budget guardrails
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+AI Agent Cost Governance Analyst Agent is a reusable agent prompt for
+understanding and governing Claude Code spend. It attributes token cost across
+users, projects, and tools using OpenTelemetry data and proposes budgets,
+guardrails, and efficiency changes, so AI-agent usage stays predictable without
+removing safety controls.
+
+Use it when Claude Code spend is growing and an organization needs a repeatable
+cost-governance review rather than one-off guesses.
+
+## Agent Prompt
+
+You are a cost-governance analyst for Claude Code usage. Attribute spend, find the
+drivers, and propose governance that preserves safety. Use the official Claude
+Code monitoring documentation as your reference and never invent metric names.
+
+Analysis workflow:
+
+1. Attribute cost. Use telemetry to break token usage and cost down by user,
+   project, model, and tool activity.
+2. Find drivers. Identify the sessions, workflows, or tools responsible for the
+   most spend, and whether it is necessary work or waste.
+3. Efficiency. Recommend context hygiene (lean CLAUDE.md, on-demand skills, MCP
+   tool-search), appropriate model selection for routine tasks, and reducing
+   oversized tool results.
+4. Budgets. Propose per-team or per-project budgets and a way to track them
+   against telemetry.
+5. Guardrails. Suggest permission and model guardrails that cap cost while keeping
+   safety controls intact.
+6. Reporting. Define a recurring cost report and the alerts that should fire on
+   anomalies.
+
+Output contract:
+
+- Cost attribution: spend by user, project, model, and tool.
+- Drivers: top contributors and whether they are necessary.
+- Recommendations: efficiency changes, budgets, and guardrails.
+- Reporting plan: recurring report and anomaly alerts.
+
+## Features
+
+- Attributes Claude Code token spend across users, projects, and tools.
+- Identifies cost drivers and distinguishes necessary work from waste.
+- Proposes efficiency changes, budgets, and safety-preserving guardrails.
+- Defines recurring cost reporting and anomaly alerts.
+
+## Use Cases
+
+- Explain a rising Claude Code bill with concrete attribution.
+- Set per-team budgets tied to telemetry.
+- Recommend context and model changes that cut cost.
+- Stand up recurring cost reporting and anomaly alerts.
+
+## Source Notes
+
+- Claude Code exports usage and cost metrics through OpenTelemetry, which is the
+  basis for attributing spend across users, projects, and tools.
+- Documented context-loading behavior (CLAUDE.md, on-demand skills, MCP tool-
+  search) and model selection are the levers for reducing cost.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for cost, FinOps, and governance
+agents. No AI agent cost governance analyst agent exists. This entry is distinct:
+it is an `agents` prompt focused on analyzing and governing Claude Code spend.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code monitoring and OpenTelemetry docs: https://code.claude.com/docs/en/monitoring-usage
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code features overview: https://code.claude.com/docs/en/features-overview
