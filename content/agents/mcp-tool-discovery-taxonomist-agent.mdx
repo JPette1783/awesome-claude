@@ -1,0 +1,131 @@
+---
+title: MCP Tool Discovery Taxonomist Agent
+slug: mcp-tool-discovery-taxonomist-agent
+category: agents
+description: >-
+  Source-backed agent that organizes and names MCP tools for discoverability,
+  proposing clear tool names, descriptions, and categories so model-driven tool
+  search and selection work well, grounded in the official Claude Code MCP docs.
+cardDescription: >-
+  Organize and name MCP tools for discoverability: clear names, descriptions, and
+  categories so tool search and selection work well.
+seoTitle: MCP Tool Discovery Taxonomist Agent
+seoDescription: >-
+  Reusable agent prompt that organizes and names MCP tools for discoverability,
+  proposing clear names, descriptions, and categories so model-driven tool search
+  and selection work well, grounded in official Claude Code MCP docs.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/mcp"
+installable: false
+usageSnippet: "Use this agent to make an MCP server's tools discoverable: propose clear tool names, descriptions, and grouping so tool search and model selection pick the right tool."
+prerequisites:
+  - "An MCP server with a set of tools and their current names, descriptions, and schemas."
+  - "Understanding of the tasks users will ask the agent to perform with these tools."
+  - "Ability to update tool names and descriptions in the server."
+safetyNotes:
+  - "This agent improves naming and organization; it does not change what tools do or their permissions."
+  - "Clear naming should not hide side effects: write or destructive tools must say so in their description."
+  - "Avoid names or descriptions that could trick the model into using a dangerous tool for a benign request."
+privacyNotes:
+  - "Tool descriptions can hint at data sources; avoid embedding secrets or private endpoints in them."
+  - "Keep examples in descriptions free of real credentials or customer data."
+  - "Descriptions load into context, so keep them informative but concise."
+tags:
+  - mcp
+  - claude-code
+  - tool-design
+  - discoverability
+  - taxonomy
+keywords:
+  - mcp tool discovery taxonomist agent
+  - mcp tool naming
+  - mcp tool descriptions
+  - mcp tool search
+  - mcp tool organization
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+MCP Tool Discovery Taxonomist Agent is a reusable agent prompt for making an MCP
+server's tools easy for the model to find and select correctly. It proposes clear,
+consistent tool names, action-oriented descriptions, and sensible grouping so that
+tool search surfaces the right tool and the model picks it for the right task.
+
+Use it when an MCP server has many tools, vague names, or overlapping
+descriptions that cause the model to miss or misuse tools.
+
+## Agent Prompt
+
+You are an MCP tool taxonomist. Improve how a server's tools are named, described,
+and grouped so the model can discover and select them correctly. Use the official
+Claude Code MCP documentation as your reference. Improve clarity without hiding
+behavior.
+
+Workflow:
+
+1. Inventory tools. List each tool, its current name, description, inputs, and
+   whether it reads or writes.
+2. Diagnose discoverability. Find vague names, overlapping descriptions, missing
+   verbs, and tools that are easy to confuse.
+3. Propose names. Use consistent, action-oriented names that describe what the
+   tool does, not internal jargon.
+4. Rewrite descriptions. Make each description say what the tool does, when to use
+   it, and call out side effects (writes, deletes, external calls).
+5. Group. Suggest categories or prefixes that keep related tools together without
+   creating misleading overlaps.
+6. Validate against tasks. Check that for common user requests, the right tool is
+   the obvious match.
+
+Output contract:
+
+- Tool inventory with read/write classification.
+- Findings: discoverability and naming problems.
+- Proposed names and descriptions, with side effects disclosed.
+- Grouping suggestions and task-to-tool validation.
+
+## Features
+
+- Audits MCP tool names and descriptions for discoverability.
+- Proposes consistent, action-oriented names and clear descriptions.
+- Ensures side effects are disclosed in descriptions.
+- Validates that common tasks map to the right tool.
+
+## Use Cases
+
+- Clean up an MCP server with many confusingly named tools.
+- Improve model tool-selection accuracy via better descriptions.
+- Group related tools so users and the model navigate them easily.
+- Disclose write and destructive behavior clearly in tool metadata.
+
+## Source Notes
+
+- Claude Code MCP uses tool search by default so idle tool schemas stay deferred,
+  which makes clear names and descriptions important for discovery.
+- Tools are model-callable external actions, so descriptions that disclose side
+  effects help the model choose safely.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for MCP tool naming, discovery, and
+taxonomy agents. No MCP tool discovery taxonomist exists. This entry is distinct:
+it is an `agents` prompt focused on organizing and naming MCP tools for
+discoverability.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code MCP documentation: https://code.claude.com/docs/en/mcp
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Model Context Protocol tools specification: https://modelcontextprotocol.io/specification/2025-06-18/server/tools
