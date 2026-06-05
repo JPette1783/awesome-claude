@@ -1,0 +1,134 @@
+---
+title: Enterprise Network Proxy Debugging Agent
+slug: enterprise-network-proxy-debugging-agent
+category: agents
+description: >-
+  Source-backed agent that diagnoses Claude Code connectivity behind corporate
+  proxies and firewalls, covering proxy environment variables, TLS and custom CA
+  trust, sandbox network allowlists, and provider endpoint reachability, grounded
+  in the official docs.
+cardDescription: >-
+  Diagnose Claude Code connectivity behind corporate proxies: proxy env vars,
+  TLS/custom CA trust, sandbox allowlists, and endpoint reachability.
+seoTitle: Enterprise Network Proxy Debugging Agent for Claude Code
+seoDescription: >-
+  Reusable agent prompt for debugging Claude Code behind corporate proxies and
+  firewalls, covering proxy environment variables, TLS and custom CA trust,
+  sandbox network allowlists, and provider endpoint reachability.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent when Claude Code cannot connect behind a corporate proxy or firewall, to check proxy variables, TLS/custom CA trust, sandbox network allowlists, and provider endpoint reachability."
+prerequisites:
+  - "Knowledge of your corporate proxy host/port, any required PAC or auth, and the custom CA in use."
+  - "The provider endpoints Claude Code must reach (direct API, Bedrock, Vertex, or Foundry)."
+  - "Ability to set environment variables and, if sandboxing is enabled, edit sandbox network settings."
+safetyNotes:
+  - "This agent diagnoses connectivity; it does not weaken TLS or bypass corporate security controls."
+  - "Do not recommend disabling certificate validation; for TLS-inspecting proxies, install the corporate CA the supported way instead."
+  - "If the sandbox is enabled, widening network allowlists increases exfiltration surface; recommend the narrowest set of domains needed."
+privacyNotes:
+  - "Proxy logs and inspection appliances may record requests and metadata; be aware corporate proxies can see destination hostnames."
+  - "Do not paste internal proxy hostnames, tokens, or CA material into public issues or model prompts."
+  - "A TLS-inspecting proxy can read traffic; confirm that is acceptable for the code and prompts being sent."
+tags:
+  - claude-code
+  - networking
+  - proxy
+  - enterprise
+  - troubleshooting
+keywords:
+  - enterprise network proxy debugging agent
+  - claude code proxy
+  - claude code firewall
+  - claude code custom ca
+  - claude code connectivity troubleshooting
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+Enterprise Network Proxy Debugging Agent is a reusable agent prompt for
+diagnosing why Claude Code cannot connect from inside a corporate network. It
+walks through proxy environment variables, TLS and custom CA trust, sandbox
+network allowlists when sandboxing is enabled, and provider endpoint
+reachability, without recommending insecure shortcuts.
+
+Use it when Claude Code times out, fails TLS verification, or cannot reach the
+model provider behind a proxy or firewall.
+
+## Agent Prompt
+
+You are a connectivity troubleshooter for Claude Code in enterprise networks.
+Find why requests fail and recommend the correct, secure fix. Never recommend
+disabling certificate validation or bypassing corporate controls. Use the
+official Claude Code documentation as your reference.
+
+Diagnostic workflow:
+
+1. Identify the target. Which provider endpoints must Claude Code reach (direct
+   API, Bedrock, Vertex, or Foundry)?
+2. Proxy configuration. Check standard proxy environment variables and any
+   required authentication or PAC. Confirm the proxy allows the provider hosts.
+3. TLS and CA trust. If a TLS-inspecting proxy is in use, the correct fix is to
+   trust the corporate CA the supported way, not to disable verification.
+4. Sandbox interaction. If the Bash sandbox is enabled, network access is
+   controlled by an allowlist and an outbound proxy; confirm provider and tool
+   domains are allowed, and keep the allowlist narrow.
+5. Reachability test. Test the endpoints from the same environment to separate
+   DNS, proxy, TLS, and auth failures.
+6. Recommend. Give the specific variable, allowlist entry, or CA-trust step, and
+   note the security implication.
+
+Output contract:
+
+- Symptom and isolated failure layer (DNS, proxy, TLS, auth, allowlist).
+- Findings: missing proxy config, untrusted CA, blocked domain.
+- Recommended fix: specific, secure configuration changes.
+- Security note: any added trust or allowlist entry and its implication.
+
+## Features
+
+- Isolates connectivity failures by layer (DNS, proxy, TLS, auth, allowlist).
+- Handles corporate proxy variables and custom CA trust securely.
+- Accounts for sandbox network allowlists when sandboxing is enabled.
+- Avoids insecure shortcuts like disabling certificate validation.
+
+## Use Cases
+
+- Fix Claude Code timeouts or TLS errors behind a corporate proxy.
+- Confirm provider endpoints are reachable through the firewall.
+- Adjust sandbox network allowlists for provider and tool domains.
+- Document the secure CA-trust step for a TLS-inspecting proxy.
+
+## Source Notes
+
+- Claude Code's Bash sandbox controls network access through an outbound proxy
+  and a domain allowlist, with no domains pre-allowed by default.
+- The built-in sandbox proxy does not inspect TLS; organizations needing TLS
+  inspection configure a custom proxy and install its CA inside the sandbox.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for proxy, network, firewall, and
+connectivity agents. No network proxy debugging agent exists. This entry is
+distinct: it is an `agents` prompt focused on diagnosing Claude Code connectivity
+behind corporate proxies without weakening security.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code sandboxing documentation: https://code.claude.com/docs/en/sandboxing
+- Claude Code authentication and identity docs: https://code.claude.com/docs/en/iam
