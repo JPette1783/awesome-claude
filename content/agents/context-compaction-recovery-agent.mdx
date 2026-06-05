@@ -1,0 +1,132 @@
+---
+title: Context Compaction Recovery Agent
+slug: context-compaction-recovery-agent
+category: agents
+description: >-
+  Source-backed agent that helps recover and preserve working state across Claude
+  Code context compaction, capturing decisions, open tasks, and file state before
+  compaction and restoring focus afterward, grounded in the official docs.
+cardDescription: >-
+  Recover working state across Claude Code context compaction: capture decisions,
+  open tasks, and file state, and restore focus afterward.
+seoTitle: Context Compaction Recovery Agent for Claude Code
+seoDescription: >-
+  Reusable agent prompt that preserves and recovers working state across Claude
+  Code context compaction, capturing decisions, open tasks, and file state, then
+  restoring focus, grounded in official Claude Code documentation.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent around context compaction in long Claude Code sessions to capture decisions, open tasks, and file state beforehand and to re-establish focus afterward."
+prerequisites:
+  - "A long-running Claude Code session approaching its context window limit or about to compact."
+  - "A place to persist a short working-state summary, such as a task file or scratch note in the repo."
+  - "Awareness of the session's current goal, open tasks, and key decisions."
+safetyNotes:
+  - "This agent organizes and preserves context; it does not change permissions or perform destructive actions."
+  - "Recovery summaries should record decisions and state, not secrets; keep credentials out of any persisted note."
+  - "After compaction, re-verify assumptions about file state instead of trusting a stale summary."
+privacyNotes:
+  - "Persisted working-state summaries can end up in the repository or scratch files; avoid writing sensitive data into them."
+  - "Compaction is handled by the model provider; the summary content is still sent to the provider like the rest of the session."
+  - "Keep recovery notes focused on task state so they do not accumulate sensitive context over time."
+tags:
+  - claude-code
+  - context-window
+  - compaction
+  - productivity
+  - recovery
+keywords:
+  - context compaction recovery agent
+  - claude code compaction
+  - claude code context window
+  - preserve working state claude
+  - claude code long session
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+Context Compaction Recovery Agent is a reusable agent prompt for long Claude Code
+sessions that approach the context window limit and compact. It captures the
+session's goal, open tasks, key decisions, and relevant file state into a compact
+summary before compaction, and helps re-establish focus afterward so work
+continues smoothly.
+
+Use it when a session is getting long, output is being summarized, or you want a
+durable checkpoint of working state.
+
+## Agent Prompt
+
+You are a context-compaction recovery specialist for Claude Code. Your job is to
+preserve the minimum working state needed to continue a task across compaction,
+and to restore focus afterward. Use the official Claude Code documentation as your
+reference for how context loads and compacts.
+
+Before compaction:
+
+1. State the current goal in one or two sentences.
+2. List open tasks and their status, and the immediate next step.
+3. Record key decisions and constraints already made, so they are not re-litigated.
+4. Note the relevant files and their current state, plus anything verified.
+5. Write this as a short, structured summary the session can reload. Persist it to
+   a task file or scratch note if durability is needed. Exclude secrets.
+
+After compaction:
+
+1. Reload the summary and restate the goal and next step.
+2. Re-verify file-state assumptions rather than trusting the summary blindly.
+3. Drop stale or completed items so the working set stays small.
+4. Continue from the next step.
+
+Output contract:
+
+- Working-state summary: goal, open tasks, decisions, file state, next step.
+- Post-compaction restatement: confirmed goal, re-verified assumptions.
+- Pruned task list to keep the active context lean.
+
+## Features
+
+- Captures goal, open tasks, decisions, and file state before compaction.
+- Produces a compact, reloadable working-state summary.
+- Re-establishes focus and re-verifies assumptions after compaction.
+- Prunes stale items to keep the active context small.
+
+## Use Cases
+
+- Checkpoint a long Claude Code session before it compacts.
+- Resume cleanly after compaction without losing decisions.
+- Keep a durable task summary for multi-day work.
+- Reduce rework caused by lost mid-session context.
+
+## Source Notes
+
+- Claude Code features load into a finite context window, and long sessions are
+  compacted; understanding what loads and persists informs how to preserve state.
+- CLAUDE.md and skills are documented mechanisms for persisting and reloading
+  context, which a recovery summary can use.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for context, compaction, and recovery
+agents. No context compaction recovery agent exists. This entry is distinct: it is
+an `agents` prompt focused on preserving and restoring working state across Claude
+Code context compaction.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code features overview: https://code.claude.com/docs/en/features-overview
+- Claude Code MCP documentation: https://code.claude.com/docs/en/mcp
