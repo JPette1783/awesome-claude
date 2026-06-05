@@ -1,0 +1,101 @@
+---
+title: Archon
+slug: archon
+category: tools
+description: >-
+  Open-source harness builder for AI coding that turns your development process
+  into deterministic, repeatable YAML workflows, running each workflow in its
+  own git worktree and integrating with Claude Code.
+cardDescription: >-
+  Open-source harness builder for AI coding — define deterministic YAML
+  workflows that run in isolated git worktrees with Claude Code.
+seoTitle: Archon — Open-Source Harness Builder for AI Coding Workflows
+seoDescription: >-
+  Archon is an MIT-licensed harness builder that encodes your development
+  process as deterministic YAML workflows, runs each in an isolated git
+  worktree, and integrates with Claude Code, a web dashboard, and chat surfaces.
+author: coleam00
+dateAdded: "2026-06-05"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+submittedAt: "2026-06-05"
+websiteUrl: "https://archon.diy"
+repoUrl: "https://github.com/coleam00/Archon"
+documentationUrl: "https://archon.diy/docs"
+pricingModel: open-source
+disclosure: editorial
+applicationCategory: DeveloperApplication
+operatingSystem: macOS, Windows, Linux
+prerequisites:
+  - "Bun installed as the JavaScript runtime and package manager."
+  - "Claude Code, which Archon orchestrates to perform the AI steps in a workflow."
+  - "GitHub CLI authenticated, since workflows create branches and pull requests."
+  - "SQLite by default, or PostgreSQL for a self-hosted deployment."
+safetyNotes:
+  - "Archon runs workflows that execute AI-generated bash commands, tests, and git operations in your environment; review workflow definitions before running them."
+  - "Each workflow run is isolated in its own git worktree to allow parallel runs, but generated code still executes on your machine, not in a remote sandbox."
+  - "Fire-and-forget runs can open pull requests automatically, so keep branch protections and human review in place."
+  - "Workflows can be triggered from Slack, Telegram, Discord, and GitHub; restrict who can invoke them to limit the blast radius of automated edits."
+privacyNotes:
+  - "Archon stores GitHub tokens and credentials in its local database; keep that database and host secured."
+  - "It sends anonymous telemetry (workflow name, platform, provider id, node count, success/failure) to PostHog; disable it with ARCHON_TELEMETRY_DISABLED=1 or DO_NOT_TRACK=1."
+  - "Code, prompts, custom workflow names, file paths, and tokens are not collected by telemetry per the project's documentation."
+  - "Running workflows makes Claude API and GitHub API calls, so code and context reach those providers during execution."
+tags:
+  - ai-coding
+  - workflow-automation
+  - claude-code
+  - orchestration
+  - open-source
+  - developer-tools
+keywords:
+  - archon
+  - ai coding harness
+  - deterministic ai workflows
+  - claude code orchestration
+  - git worktree workflows
+  - ai coding workflow engine
+---
+
+## Overview
+
+Archon describes itself as the first open-source harness builder for AI coding.
+It makes AI-assisted development deterministic and repeatable by letting you
+encode your development process as YAML workflows — planning, implementation,
+validation, code review, PR creation — where the AI fills in the intelligence at
+each step but the structure stays deterministic.
+
+It is released under the MIT license and built in TypeScript on the Bun runtime,
+with SQLite or PostgreSQL for storage. Archon orchestrates Claude Code to do the
+AI work and exposes a web dashboard plus CLI and chat surfaces.
+
+## Features
+
+- Define development processes as deterministic, composable YAML workflows.
+- Isolated execution: each run gets its own git worktree for safe parallel runs.
+- Fire-and-forget operation that returns finished PRs with review comments.
+- Mix deterministic nodes (bash scripts, tests) with AI nodes.
+- 19 bundled workflows for issue fixing, PR review, features, and refactoring.
+- Web dashboard plus access via CLI, Slack, Telegram, Discord, and GitHub.
+
+## Use Cases
+
+- Standardize a repeatable AI coding process across projects and a team.
+- Run multiple coding workflows in parallel without environment conflicts.
+- Automate routine issue fixes, refactors, and PR reviews.
+- Trigger workflows from chat surfaces and return to ready-for-review PRs.
+
+## Installation
+
+```bash
+# Homebrew
+brew install coleam00/archon/archon
+```
+
+Or clone the repository and run `bun install`, then ask Claude Code to "Set up
+Archon". See the documentation for the full setup.
+
+## Disclosure
+
+Editorial listing. No paid placement or affiliate relationship. Archon is open
+source under the MIT license.
