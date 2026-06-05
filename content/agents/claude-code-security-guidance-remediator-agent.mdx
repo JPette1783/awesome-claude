@@ -1,0 +1,149 @@
+---
+title: Claude Code Security Guidance Remediator Agent
+slug: claude-code-security-guidance-remediator-agent
+category: agents
+description: >-
+  Source-backed agent that reviews and remediates a Claude Code project's
+  security configuration — permission allow/ask/deny rules, permission modes,
+  hooks, MCP tool authority, and credential handling — and proposes least-
+  privilege changes grounded in the official docs.
+cardDescription: >-
+  Review and remediate Claude Code security config: permission rules, modes,
+  hooks, MCP tool authority, and credential handling.
+seoTitle: Claude Code Security Guidance Remediator Agent
+seoDescription: >-
+  Reusable agent prompt that audits Claude Code permission rules, permission
+  modes, hooks, MCP tool authority, and credential handling, then proposes
+  least-privilege remediations grounded in official Claude Code documentation.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/iam"
+installable: false
+usageSnippet: "Use this agent to audit a Claude Code project's settings and propose least-privilege fixes to permission rules, permission modes, hooks, MCP tool authority, and credential handling."
+prerequisites:
+  - "A Claude Code project with its settings.json (and any user/managed settings) available for review."
+  - "Knowledge of which tools, Bash commands, and MCP servers the workflow legitimately needs."
+  - "An owner who can approve permission changes and accept residual risk."
+safetyNotes:
+  - "This agent recommends configuration changes; it does not enforce them, and applying a recommendation still requires human review."
+  - "Flag bypassPermissions / broadly permissive modes and unscoped allow rules (for example wide Bash globs) and recommend narrowing them to least privilege."
+  - "Recommend PreToolUse hooks as guardrails for risky commands, but note hooks run with the user's privileges and must themselves be reviewed."
+  - "Treat MCP servers and tools as execution surfaces; recommend explicit allow rules and confirmation rather than blanket access."
+privacyNotes:
+  - "Settings under review can reference repository paths, server URLs, and command patterns; avoid pasting secrets or private hostnames into public comments."
+  - "Credentials are stored outside settings (encrypted Keychain on macOS, 0600 file on Linux, profile-protected on Windows); recommend apiKeyHelper or a vault for rotating tokens instead of inlining keys."
+  - "Note that ANTHROPIC_API_KEY in the environment can take precedence over subscription login; flag stray keys that change which account is billed or trusted."
+tags:
+  - claude-code
+  - security
+  - permissions
+  - remediation
+  - review
+keywords:
+  - claude code security guidance remediator agent
+  - claude code permissions review
+  - claude code settings security
+  - least privilege claude code
+  - claude code hooks guardrails
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+Claude Code Security Guidance Remediator Agent is a reusable agent prompt for
+auditing and tightening a Claude Code project's security posture. It reviews the
+permission system, permission modes, hooks, MCP tool authority, and credential
+handling, then proposes concrete least-privilege changes grounded in the
+official Claude Code documentation.
+
+Use it when onboarding a repository to Claude Code, before enabling broad
+automation, or when a project has accumulated permissive allow rules and you want
+to bring it back to least privilege.
+
+## Agent Prompt
+
+You are a Claude Code security guidance remediator. Your job is to find risky
+configuration and propose the smallest changes that restore least privilege,
+using the official Claude Code documentation as your reference. Recommend; do not
+silently change. Always leave a human approval step.
+
+Areas to review:
+
+1. Permission rules. Inspect allow / ask / deny rules in settings. Flag overly
+   broad entries (for example wide `Bash(...)` globs, blanket tool access) and
+   propose narrower, specific rules. Prefer `ask` or `deny` for destructive or
+   far-reaching actions.
+2. Permission mode. Identify the active mode. Flag broadly permissive modes such
+   as bypassing permission prompts, and recommend default or plan modes unless
+   there is a clear, owned reason for more autonomy.
+3. Hooks. Recommend PreToolUse hooks as deterministic guardrails for risky
+   commands (for example destructive shell, network installers). Note that hooks
+   run with the user's privileges and must themselves be reviewed and trusted.
+4. MCP tool authority. Treat each MCP server and tool as an external-system
+   action surface. Recommend explicit allow rules, confirmation for writes, and
+   least-privilege scopes rather than blanket access.
+5. Credential handling. Confirm credentials are not inlined in settings or
+   committed. Recommend secure storage (OS keychain or 0600 file), `apiKeyHelper`
+   or a vault for rotating tokens, and flag stray `ANTHROPIC_API_KEY` that can
+   override subscription login and change the trusted/billed account.
+6. Settings precedence. Note where a setting comes from (managed, user, project)
+   and whether a project setting unexpectedly widens access.
+
+Output contract:
+
+- Posture summary: permission mode, rule sources, MCP servers, hooks present.
+- Findings: each risky setting, why it is risky, and its source file.
+- Remediations: specific rule edits, mode changes, hook additions, and
+  credential fixes, written as least-privilege changes.
+- Residual risk and an explicit owner approval step.
+- Decision: compliant, remediate, or block broad automation until fixed.
+
+## Features
+
+- Reviews Claude Code permission rules, modes, hooks, MCP authority, and
+  credentials against documented behavior.
+- Proposes least-privilege remediations rather than blanket allow rules.
+- Recommends PreToolUse hooks as guardrails while noting their privilege.
+- Flags credential and settings-precedence pitfalls, including stray API keys.
+
+## Use Cases
+
+- Onboard a repository to Claude Code with a least-privilege permission set.
+- Tighten a project that has drifted toward broad allow rules.
+- Review MCP tool authority before enabling write-capable servers.
+- Audit credential handling and settings precedence across managed/user/project.
+
+## Source Notes
+
+- Claude Code permissions are configured through allow / ask / deny rules and
+  permission modes in settings, with managed, user, and project precedence.
+- Hooks such as PreToolUse can act as deterministic guardrails but run with the
+  user's privileges.
+- Credentials are stored outside settings (encrypted Keychain on macOS, a 0600
+  file on Linux, profile-protected on Windows), and `ANTHROPIC_API_KEY` can take
+  precedence over subscription login when present.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for Claude Code security, permissions
+review, settings hardening, and remediation agents. Adjacent content covers
+general security review and AI-generated code review, but this entry is distinct:
+it is an `agents` prompt focused specifically on auditing and remediating Claude
+Code's own permission, hook, MCP-authority, and credential configuration.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code authentication and identity docs: https://code.claude.com/docs/en/iam
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code features overview: https://code.claude.com/docs/en/features-overview
