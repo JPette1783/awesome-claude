@@ -1,0 +1,135 @@
+---
+title: GitLab CI Claude Automation Agent
+slug: gitlab-ci-claude-automation-agent
+category: agents
+description: >-
+  Source-backed agent that helps run Claude Code non-interactively in GitLab CI
+  pipelines, covering headless invocation, long-lived OAuth tokens, least-
+  privilege CI variables, permission modes, and safe automation boundaries,
+  grounded in the official Claude Code docs.
+cardDescription: >-
+  Run Claude Code in GitLab CI safely: headless invocation, OAuth tokens, masked
+  CI variables, permission modes, and automation boundaries.
+seoTitle: GitLab CI Claude Automation Agent
+seoDescription: >-
+  Reusable agent prompt for running Claude Code in GitLab CI pipelines with
+  headless invocation, long-lived OAuth tokens, masked CI variables, scoped
+  permissions, and safe automation boundaries, grounded in official docs.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent when wiring Claude Code into GitLab CI jobs, to set up headless authentication, scope CI variables and permissions, and define safe automation boundaries."
+prerequisites:
+  - "A GitLab project with CI/CD enabled and the ability to set masked, protected CI/CD variables."
+  - "A Claude Code authentication method suitable for CI (a long-lived OAuth token or an API key) stored as a protected variable."
+  - "Claude Code available in the CI image or installed during the job."
+safetyNotes:
+  - "This agent designs CI automation; it does not hold or rotate your secrets, and a human should review the pipeline before enabling it."
+  - "In CI, prefer a permission mode and allow rules scoped to exactly what the job needs; avoid skipping permissions broadly in shared runners."
+  - "Treat the job as autonomous: constrain which branches, files, and commands the automation can touch, and keep deny rules for destructive actions."
+  - "Long-lived OAuth tokens are inference-scoped and powerful; store them as masked, protected CI variables and rotate them."
+privacyNotes:
+  - "CI jobs send repository code and context to the configured model provider; review what the pipeline exposes before running it on private code."
+  - "CI logs can capture command output; avoid printing secrets and mask sensitive variables."
+  - "Tokens and API keys must be stored as masked, protected CI/CD variables, never inlined in .gitlab-ci.yml."
+tags:
+  - claude-code
+  - gitlab-ci
+  - automation
+  - ci-cd
+  - security
+keywords:
+  - gitlab ci claude automation agent
+  - claude code gitlab ci
+  - headless claude code
+  - claude code ci token
+  - claude code pipeline automation
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+GitLab CI Claude Automation Agent is a reusable agent prompt for running Claude
+Code non-interactively inside GitLab CI pipelines. It helps wire up headless
+authentication, scope CI variables and permissions, and define safe automation
+boundaries so a pipeline can use Claude Code without leaking secrets or running
+unbounded.
+
+Use it when adding a Claude Code job to `.gitlab-ci.yml`, or when a CI job is
+failing to authenticate or is running with broader permissions than it needs.
+
+## Agent Prompt
+
+You are a GitLab CI automation specialist for Claude Code. Help the user run
+Claude Code headlessly in a pipeline, with least-privilege authentication and
+clear automation boundaries. Use the official Claude Code documentation as your
+reference.
+
+Setup checklist:
+
+1. Authentication. For non-interactive CI, use a long-lived OAuth token or an API
+   key stored as a masked, protected CI/CD variable. Do not rely on browser login.
+2. Permission posture. Choose a permission mode and allow/deny rules scoped to the
+   job's task. Keep deny rules for destructive actions even in automation.
+3. Scope. Constrain which branches, paths, and commands the job can touch. Prefer
+   a narrow job that does one thing.
+4. Secrets hygiene. Confirm tokens are masked and protected, never echoed to logs,
+   and rotated on a schedule.
+5. Determinism. Pin the Claude Code version in the CI image and pass the prompt or
+   task explicitly rather than relying on interactive state.
+6. Verification. Run the job on a throwaway branch first and review the diff and
+   logs before enabling it on protected branches.
+
+Output contract:
+
+- Pipeline summary: auth method, permission mode, scoped variables, job triggers.
+- Findings: over-broad permissions, unmasked secrets, unbounded scope.
+- Recommended changes: scoped rules, masked variables, narrower job definition.
+- Verification steps and a go/no-go for protected branches.
+
+## Features
+
+- Sets up headless Claude Code authentication suitable for CI.
+- Scopes CI/CD variables and permission rules to least privilege.
+- Defines branch, path, and command boundaries for automated jobs.
+- Provides secret-hygiene and verification steps for pipelines.
+
+## Use Cases
+
+- Add a Claude Code job to a GitLab pipeline for reviews or fixes.
+- Diagnose CI authentication failures for Claude Code.
+- Tighten permissions and secret handling in an existing automation job.
+- Validate a Claude Code job on a throwaway branch before protecting it.
+
+## Source Notes
+
+- Claude Code supports non-interactive use with a long-lived OAuth token
+  generated for CI pipelines, and API key based authentication, chosen through
+  the documented authentication precedence.
+- Permission modes and allow/ask/deny rules control which tools and commands run,
+  and are the basis for least-privilege automation.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for GitLab, CI/CD, and Claude Code
+automation agents. No GitLab CI automation agent exists. This entry is distinct:
+it is an `agents` prompt focused on running Claude Code headlessly in GitLab CI
+with least-privilege auth and bounded automation.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code features overview: https://code.claude.com/docs/en/features-overview
+- Claude Code authentication and identity docs: https://code.claude.com/docs/en/iam
