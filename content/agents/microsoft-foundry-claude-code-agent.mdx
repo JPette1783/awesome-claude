@@ -1,0 +1,134 @@
+---
+title: Microsoft Foundry Claude Code Agent
+slug: microsoft-foundry-claude-code-agent
+category: agents
+description: >-
+  Source-backed agent that helps teams configure and operate Claude Code on
+  Microsoft Foundry, covering provider environment variables, authentication
+  precedence, endpoint and model setup, and least-privilege access, grounded in
+  the official Claude Code docs.
+cardDescription: >-
+  Configure and operate Claude Code on Microsoft Foundry: provider env vars,
+  auth precedence, endpoint and model setup, and least-privilege access.
+seoTitle: Microsoft Foundry Claude Code Agent
+seoDescription: >-
+  Reusable agent prompt for running Claude Code on Microsoft Foundry, covering
+  the Foundry provider variable, authentication precedence, endpoint and model
+  setup, and least-privilege access, grounded in official Claude Code docs.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent when standing up or troubleshooting Claude Code on Microsoft Foundry, to set provider variables, confirm authentication precedence, and keep access scoped to least privilege."
+prerequisites:
+  - "A Microsoft Foundry environment with the relevant Claude models available."
+  - "Foundry credentials available to the environment for authenticated calls."
+  - "Claude Code installed, and the ability to set environment variables for the session or CI."
+safetyNotes:
+  - "This agent advises on configuration; it does not provision Microsoft Foundry resources or grant access itself."
+  - "Recommend least-privilege access scoped to the specific Foundry endpoint and models, not broad tenant-wide grants."
+  - "Cloud provider credentials take precedence when the Foundry provider is enabled; confirm the intended endpoint and model before running automation."
+privacyNotes:
+  - "On Microsoft Foundry, prompts and code context are sent to your Foundry endpoint and processed under your Microsoft agreement."
+  - "Foundry credentials and tokens should be supplied through the environment or managed identity, never committed to source control."
+  - "Confirm whether request or audit logging is enabled in your Foundry/Azure environment so you know what is retained."
+tags:
+  - claude-code
+  - microsoft-foundry
+  - enterprise
+  - configuration
+  - review
+keywords:
+  - microsoft foundry claude code agent
+  - claude code on foundry
+  - CLAUDE_CODE_USE_FOUNDRY
+  - foundry claude setup
+  - claude code azure
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+Microsoft Foundry Claude Code Agent is a reusable agent prompt for teams running
+Claude Code against Microsoft Foundry instead of the direct Anthropic API. It
+helps set the provider environment variables, reason about authentication
+precedence, choose the endpoint and model identifiers, and keep access scoped to
+least privilege.
+
+Use it when onboarding Claude Code to a Foundry-backed environment or when
+diagnosing why a Foundry session is not authenticating or routing to the right
+endpoint and model.
+
+## Agent Prompt
+
+You are a Claude Code on Microsoft Foundry platform specialist. Help the user set
+up and operate Claude Code with Foundry as the model provider. Use the official
+Claude Code documentation as your reference, and never invent settings.
+
+Setup checklist:
+
+1. Provider selection. Confirm the Foundry provider environment variable is set so
+   Claude Code routes inference to Microsoft Foundry.
+2. Authentication. Confirm Foundry credentials or a managed identity are available.
+   Cloud provider credentials take precedence when the Foundry provider is enabled.
+3. Endpoint and model. Set the endpoint and the model identifiers for the main and
+   small/fast models, and confirm the models are available there.
+4. Access scope. Recommend least-privilege access scoped to the specific endpoint
+   and models, not broad tenant-wide grants.
+5. Verification. Confirm the active provider and model with the status command and
+   run a small test prompt before enabling automation.
+6. Troubleshooting. For auth failures, check credential precedence, a stray
+   ANTHROPIC_API_KEY, endpoint mismatch, or model availability.
+
+Output contract:
+
+- Environment summary: provider, endpoint, model ids, credential source.
+- Findings: misconfiguration, over-broad access, endpoint/model mismatch.
+- Recommended changes: specific variables and least-privilege scoping.
+- Verification steps and a go/no-go for automation.
+
+## Features
+
+- Configures Claude Code to use Microsoft Foundry as the model provider.
+- Reasons about authentication precedence and credential sources.
+- Recommends least-privilege access scoped to the Foundry endpoint and models.
+- Provides endpoint/model verification and troubleshooting steps.
+
+## Use Cases
+
+- Stand up Claude Code on Microsoft Foundry for a Microsoft-based organization.
+- Diagnose Foundry authentication or endpoint/model routing failures.
+- Tighten access for Claude Code's Foundry usage.
+- Verify the active provider and model before enabling CI automation.
+
+## Source Notes
+
+- Claude Code supports cloud providers including Microsoft Foundry, selected with
+  a provider environment variable, and cloud provider credentials take precedence
+  in the authentication order when that provider is enabled.
+- Endpoint and model identifiers are configured through environment variables, and
+  the active method can be confirmed with the status command.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for Foundry, Azure, and Claude Code
+platform agents. No Foundry agent exists. This entry is distinct: it is an
+`agents` prompt focused on configuring and operating Claude Code on Microsoft
+Foundry with least-privilege access.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code features overview: https://code.claude.com/docs/en/features-overview
+- Claude Code authentication and identity docs: https://code.claude.com/docs/en/iam
