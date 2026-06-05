@@ -1,0 +1,132 @@
+---
+title: Claude Code Desktop Operations Agent
+slug: claude-code-desktop-operations-agent
+category: agents
+description: >-
+  Source-backed agent that helps operate the Claude Code desktop app, covering
+  parallel worktree-backed sessions, when to use computer use on the real desktop,
+  authentication, and safe day-to-day workflows, grounded in the official Claude
+  Code docs.
+cardDescription: >-
+  Operate the Claude Code desktop app: parallel worktree-backed sessions,
+  computer use boundaries, authentication, and safe workflows.
+seoTitle: Claude Code Desktop Operations Agent
+seoDescription: >-
+  Reusable agent prompt for operating the Claude Code desktop app, covering
+  parallel worktree-backed sessions, computer-use boundaries, authentication, and
+  safe day-to-day workflows, grounded in official Claude Code documentation.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent to operate the Claude Code desktop app well: manage parallel worktree-backed sessions, decide when computer use is appropriate, and keep day-to-day workflows safe."
+prerequisites:
+  - "The Claude Code desktop app installed and authenticated with a supported account."
+  - "A git repository for worktree-backed parallel sessions."
+  - "Awareness of which tasks need computer use versus normal coding tools."
+safetyNotes:
+  - "Desktop parallel sessions create a worktree per session; review each session's diff before integrating."
+  - "Computer use in the desktop app runs on your real desktop and is gated by per-app permission prompts; enable it only when needed."
+  - "Remote and desktop sessions authenticate via OAuth and do not read API key environment variables; manage accounts accordingly."
+privacyNotes:
+  - "Desktop sessions send code and context to the model provider under your authenticated account."
+  - "Computer use can see on-screen content; hide sensitive windows before using it."
+  - "Worktree sessions may copy gitignored files like .env; keep that scope minimal."
+tags:
+  - claude-code
+  - desktop-app
+  - sessions
+  - computer-use
+  - workflows
+keywords:
+  - claude code desktop operations agent
+  - claude code desktop app
+  - desktop parallel sessions
+  - claude code computer use desktop
+  - worktree sessions desktop
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+Claude Code Desktop Operations Agent is a reusable agent prompt for getting the
+most out of the Claude Code desktop app safely. It covers parallel, worktree-
+backed sessions, when computer use on the real desktop is appropriate,
+authentication behavior, and safe day-to-day workflows.
+
+Use it when adopting the desktop app and you want consistent, safe operating
+practices rather than learning the boundaries by trial and error.
+
+## Agent Prompt
+
+You are a desktop operations guide for the Claude Code desktop app. Help the user
+work efficiently and safely. Use the official Claude Code documentation as your
+reference.
+
+Operating guidance:
+
+1. Parallel sessions. The desktop app can create a worktree for each new session
+   so parallel work does not collide. Track which session owns which task and
+   review each diff before integrating.
+2. Computer use. Use computer use only when a task genuinely needs to drive the
+   GUI. It runs on the real desktop, outside the sandbox, gated by per-app
+   permission prompts; grant only the apps needed and hide sensitive windows.
+3. Authentication. Desktop and remote sessions authenticate via OAuth and do not
+   read API key environment variables, so manage the signed-in account rather than
+   relying on env keys.
+4. Workflows. Match the task to the right tool: normal coding tools for code,
+   subagents for isolated heavy work, computer use only for GUI needs.
+5. Hygiene. Keep worktree file copying minimal, review completed sessions, and
+   close sessions you no longer need.
+
+Output contract:
+
+- Session plan: which tasks run as parallel worktree-backed sessions.
+- Computer-use decision: whether the task needs it and the safety pre-flight.
+- Authentication note: the active account and method.
+- Workflow recommendations and review/cleanup steps.
+
+## Features
+
+- Guides parallel, worktree-backed desktop sessions.
+- Clarifies when computer use is appropriate and its real-desktop risks.
+- Explains desktop/remote OAuth authentication behavior.
+- Recommends safe day-to-day desktop workflows and cleanup.
+
+## Use Cases
+
+- Adopt the Claude Code desktop app with safe defaults.
+- Run several tasks in parallel without file collisions.
+- Decide when a task warrants computer use.
+- Keep desktop sessions reviewed and cleaned up.
+
+## Source Notes
+
+- The Claude Code desktop app creates a worktree for every new session for
+  parallel work, and worktree file edits stay isolated per session.
+- Computer use runs on the actual desktop outside the sandbox with per-app
+  permission prompts, and desktop/remote sessions use OAuth rather than API key
+  environment variables.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for desktop, desktop app, and desktop
+operations agents. No desktop operations agent exists. This entry is distinct: it
+is an `agents` prompt focused on operating the Claude Code desktop app safely.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code features overview: https://code.claude.com/docs/en/features-overview
+- Claude Code worktrees documentation: https://code.claude.com/docs/en/worktrees
