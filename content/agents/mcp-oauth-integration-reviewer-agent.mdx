@@ -1,0 +1,135 @@
+---
+title: MCP OAuth Integration Reviewer Agent
+slug: mcp-oauth-integration-reviewer-agent
+category: agents
+description: >-
+  Source-backed agent that reviews OAuth-based MCP server integrations in Claude
+  Code, checking the authorization flow, scopes, token storage and refresh,
+  header fallback behavior, and dynamic header helpers, grounded in the official
+  Claude Code MCP docs.
+cardDescription: >-
+  Review OAuth-based MCP integrations: authorization flow, scopes, token storage
+  and refresh, and header/helper configuration.
+seoTitle: MCP OAuth Integration Reviewer Agent
+seoDescription: >-
+  Reusable agent prompt that reviews OAuth-based MCP server integrations in
+  Claude Code, checking the authorization flow, scopes, token storage and
+  refresh, and header configuration, grounded in official Claude Code MCP docs.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/mcp"
+installable: false
+usageSnippet: "Use this agent to review an OAuth-based MCP server integration in Claude Code: the authorization flow, scopes, token storage and refresh, and header or helper configuration."
+prerequisites:
+  - "An MCP server that authenticates with OAuth, plus its scope and authorization-server details."
+  - "The Claude Code MCP configuration for the server (transport, headers, or headers helper)."
+  - "Knowledge of least-privilege scopes the integration actually needs."
+safetyNotes:
+  - "This agent reviews the integration; it does not perform the OAuth flow or store tokens itself."
+  - "Recommend the minimum scopes needed; flag over-broad scopes that grant more access than the tools require."
+  - "If a static Authorization header is configured and rejected, Claude Code reports the connection as failed instead of falling back to OAuth; flag misconfigured headers."
+privacyNotes:
+  - "OAuth tokens are stored securely and refreshed automatically by Claude Code; do not hardcode or commit tokens."
+  - "Header helpers run a command to produce headers at connection time with no caching; ensure that command does not leak secrets to logs."
+  - "Confirm what data the authorized scopes expose and whether that matches the integration's purpose."
+tags:
+  - mcp
+  - claude-code
+  - oauth
+  - authentication
+  - review
+keywords:
+  - mcp oauth integration reviewer agent
+  - mcp oauth review
+  - mcp token scopes
+  - mcp headers helper
+  - claude code mcp authentication
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+MCP OAuth Integration Reviewer Agent is a reusable agent prompt for reviewing how
+an OAuth-based MCP server is integrated into Claude Code. It checks the
+authorization flow, the scopes requested, token storage and refresh behavior, and
+any header or dynamic header-helper configuration, so the integration is correct
+and least-privilege.
+
+Use it when connecting an MCP server that uses OAuth, or when an OAuth connection
+behaves unexpectedly.
+
+## Agent Prompt
+
+You are an OAuth integration reviewer for Claude Code MCP servers. Confirm the
+OAuth setup is correct, least-privilege, and secure. Use the official Claude Code
+MCP documentation as your reference.
+
+Review workflow:
+
+1. Flow. Confirm the server uses OAuth and that the authorization flow completes
+   against the correct authorization server.
+2. Scopes. Identify the requested scopes and recommend the minimum needed for the
+   tools in use. Flag over-broad scopes.
+3. Token lifecycle. Confirm tokens are stored securely and refreshed
+   automatically, and that offline/refresh handling is appropriate.
+4. Header configuration. If a static Authorization header is set, note that a
+   server rejecting it causes Claude Code to report the connection as failed
+   rather than falling back to OAuth. Recommend removing a bad header to use the
+   OAuth flow.
+5. Header helpers. If a dynamic headers helper is used, confirm it runs per
+   connection without caching and does not leak secrets to logs.
+6. Decision. Approve, request scope or config changes, or block.
+
+Output contract:
+
+- Integration summary: flow, scopes, token lifecycle, header config.
+- Findings: over-broad scopes, header misconfiguration, secret leakage risk.
+- Recommended changes: least-privilege scopes and corrected configuration.
+- Decision: approve, request changes, or block.
+
+## Features
+
+- Reviews the OAuth authorization flow for an MCP server.
+- Recommends least-privilege scopes for the tools in use.
+- Checks token storage, refresh, and header/helper configuration.
+- Flags header misconfiguration that blocks the OAuth fallback.
+
+## Use Cases
+
+- Review an OAuth MCP integration before enabling it.
+- Right-size OAuth scopes to what the tools actually need.
+- Diagnose an OAuth MCP connection reported as failed.
+- Confirm a headers helper does not leak secrets.
+
+## Source Notes
+
+- Claude Code MCP supports OAuth for remote servers, stores tokens securely, and
+  refreshes them automatically, appending offline_access when advertised so tokens
+  can refresh without a new sign-in.
+- If a configured Authorization header is rejected, Claude Code reports the
+  connection as failed instead of falling back to OAuth, and a dynamic headers
+  helper runs per connection without caching.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for MCP OAuth, authentication, and
+integration review agents. No MCP OAuth integration reviewer exists. This entry is
+distinct: it is an `agents` prompt focused on reviewing OAuth-based MCP server
+integrations in Claude Code.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code MCP documentation: https://code.claude.com/docs/en/mcp
+- Model Context Protocol security best practices: https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices
+- Claude Code authentication and identity docs: https://code.claude.com/docs/en/iam
