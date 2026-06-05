@@ -1,0 +1,135 @@
+---
+title: Dynamic Workflow Migration Planner Agent
+slug: dynamic-workflow-migration-planner-agent
+category: agents
+description: >-
+  Source-backed agent that plans migrations between Claude Code extension
+  approaches, moving work between CLAUDE.md, skills, subagents, hooks, MCP, and
+  plugins, and converting standalone config into shareable plugins, grounded in
+  the official Claude Code docs.
+cardDescription: >-
+  Plan Claude Code workflow migrations across CLAUDE.md, skills, subagents,
+  hooks, MCP, and plugins, including standalone-to-plugin conversion.
+seoTitle: Dynamic Workflow Migration Planner Agent for Claude Code
+seoDescription: >-
+  Reusable agent prompt that plans migrations between Claude Code extension
+  approaches across CLAUDE.md, skills, subagents, hooks, MCP, and plugins,
+  including standalone-to-plugin conversion, grounded in official docs.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent to plan moving a Claude Code workflow between extension approaches: CLAUDE.md, skills, subagents, hooks, MCP, or a shareable plugin."
+prerequisites:
+  - "An existing Claude Code setup (CLAUDE.md, .claude/ config, skills, or hooks) you want to evolve or share."
+  - "Knowledge of which behaviors must always apply versus load on demand, and what should be shared across repos."
+  - "Ability to edit configuration and, for plugins, create a plugin directory and manifest."
+safetyNotes:
+  - "This agent plans a migration; it does not move guardrails into weaker forms. Enforcement rules belong in hooks, not prompts."
+  - "When converting to a plugin, remember bundled hooks, MCP servers, and bin executables run with user privileges and need review."
+  - "Preserve deny rules and safety instructions through the migration rather than dropping them for convenience."
+privacyNotes:
+  - "Moving content into always-on context (CLAUDE.md) sends it every request; keep secrets out and prefer on-demand skills for reference material."
+  - "Sharing a workflow as a plugin distributes its components; ensure no secrets or private endpoints are bundled."
+  - "Subagents use isolated context; confirm what context you pass into them."
+tags:
+  - claude-code
+  - migration
+  - workflows
+  - plugins
+  - planning
+keywords:
+  - dynamic workflow migration planner agent
+  - claude code workflow migration
+  - standalone to plugin
+  - claude code extension choices
+  - migrate claude config
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+Dynamic Workflow Migration Planner Agent is a reusable agent prompt for planning
+how a Claude Code workflow should evolve across the extension layer. It decides
+when to move work between CLAUDE.md, skills, subagents, hooks, and MCP, and how to
+convert standalone `.claude/` configuration into a shareable, versioned plugin,
+based on how each feature actually loads and behaves.
+
+Use it when a setup has outgrown its current form, or when a personal workflow
+needs to become a shared, reusable plugin.
+
+## Agent Prompt
+
+You are a migration planner for Claude Code workflows. Decide the right home for
+each piece of a workflow and plan the move, preserving guardrails. Use the
+official Claude Code documentation as your reference.
+
+Planning workflow:
+
+1. Inventory. List the current pieces: always-on rules, reference material,
+   repeatable procedures, automation, external connections.
+2. Match to features. Map each piece to the right feature: always-on rules to
+   CLAUDE.md; reference and procedures to skills; isolated heavy work to subagents;
+   guaranteed event-driven actions to hooks; external systems to MCP.
+3. Right-size context. Move large reference material out of always-on context into
+   on-demand skills to control cost.
+4. Preserve guardrails. Keep enforcement as hooks and deny rules, not as prose
+   that the model may not follow.
+5. Share when needed. To reuse across repos or distribute, plan conversion of
+   standalone config into a plugin with a manifest, namespaced skills, and a
+   versioning strategy.
+6. Sequence and verify. Order the migration so nothing breaks, and verify each
+   moved piece works (skills appear, hooks fire, MCP connects).
+
+Output contract:
+
+- Inventory of current workflow pieces.
+- Target mapping: where each piece should live and why.
+- Plugin conversion plan, if sharing is needed.
+- Migration sequence with verification steps and preserved guardrails.
+
+## Features
+
+- Maps workflow pieces to CLAUDE.md, skills, subagents, hooks, and MCP.
+- Right-sizes always-on context versus on-demand loading.
+- Preserves guardrails as hooks and deny rules through the move.
+- Plans standalone-to-plugin conversion with manifest and versioning.
+
+## Use Cases
+
+- Evolve an overgrown CLAUDE.md into skills and rules.
+- Turn a personal `.claude/` setup into a shareable plugin.
+- Decide whether a task belongs in a hook, skill, or subagent.
+- Sequence a migration so the workflow keeps working throughout.
+
+## Source Notes
+
+- Claude Code documents distinct extension features (CLAUDE.md, skills, subagents,
+  agent teams, hooks, MCP, plugins) with different loading and best-fit use cases.
+- Standalone `.claude/` configuration can be converted into a plugin with a
+  manifest and namespaced skills, and guardrails are best enforced as hooks rather
+  than prompt instructions.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for migration, workflow, and plugin
+conversion agents. No dynamic workflow migration planner exists. This entry is
+distinct: it is an `agents` prompt focused on planning migrations across Claude
+Code's extension approaches.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code features overview: https://code.claude.com/docs/en/features-overview
+- Claude Code plugins documentation: https://code.claude.com/docs/en/plugins
