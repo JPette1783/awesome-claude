@@ -1,0 +1,133 @@
+---
+title: Agent Observability SRE Agent
+slug: agent-observability-sre-agent
+category: agents
+description: >-
+  Source-backed agent that applies SRE practices to fleets of Claude Code agents,
+  defining signals, SLOs, and alerts from OpenTelemetry data and agent view, and
+  driving incident triage for stuck, looping, or failing sessions, grounded in the
+  official docs.
+cardDescription: >-
+  Apply SRE practices to Claude Code agent fleets: signals, SLOs, alerts from
+  telemetry and agent view, and incident triage.
+seoTitle: Agent Observability SRE Agent for Claude Code
+seoDescription: >-
+  Reusable agent prompt that brings SRE practices to Claude Code agent fleets,
+  defining signals, SLOs, and alerts from OpenTelemetry and agent view, and
+  triaging stuck or failing sessions, grounded in official documentation.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent to bring SRE discipline to a fleet of Claude Code sessions: define signals and SLOs from telemetry, set alerts, and triage stuck, looping, or failing agents."
+prerequisites:
+  - "Claude Code OpenTelemetry enabled with a metrics/logs backend, and access to agent view for live session state."
+  - "A defined set of agent workflows or fleets whose reliability you want to track."
+  - "Permission to define alerts and dashboards in your monitoring backend."
+safetyNotes:
+  - "This agent defines observability and triage practice; it does not change agent permissions or take destructive remediation itself."
+  - "Automated remediation of stuck agents should be bounded and reviewed; prefer pausing or escalating over force actions."
+  - "Alert thresholds that auto-trigger actions must be conservative to avoid amplifying a bad state across a fleet."
+privacyNotes:
+  - "Observability data (metrics, logs, events) can include session and tool-activity detail; confirm what is exported and where it is stored."
+  - "Dashboards and incident notes can surface repository or task context; avoid including secrets."
+  - "Agent view shows live session activity; restrict who can view and dispatch sessions."
+tags:
+  - claude-code
+  - observability
+  - sre
+  - reliability
+  - agent-fleet
+keywords:
+  - agent observability sre agent
+  - claude code sre
+  - claude code agent fleet
+  - claude code slo
+  - claude code agent view monitoring
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+Agent Observability SRE Agent is a reusable agent prompt that applies site-
+reliability practices to fleets of Claude Code sessions. It defines the signals
+worth watching, turns them into SLOs and alerts using OpenTelemetry data and agent
+view, and provides an incident-triage workflow for sessions that get stuck, loop,
+or fail.
+
+Use it when you run many Claude Code agents and need reliability discipline rather
+than ad-hoc monitoring.
+
+## Agent Prompt
+
+You are an SRE for a fleet of Claude Code agents. Define what to measure, set
+SLOs and alerts, and triage incidents. Use the official Claude Code monitoring and
+agent view documentation as your reference, and keep remediation bounded and
+reviewable.
+
+Reliability workflow:
+
+1. Signals. From OpenTelemetry, track token cost, error rates, tool failures, and
+   session duration. From agent view, track how many sessions need input, are
+   working, or are completed.
+2. SLOs. Propose objectives such as a ceiling on stuck-session rate or cost per
+   completed task, tied to available metrics.
+3. Alerts. Define alerts for runaway cost, rising error rates, and sessions stuck
+   needing input beyond a threshold.
+4. Triage. For a problem session, classify it: waiting on input, looping, failing
+   a tool, or blocked on auth/network. Recommend pause, escalate, or resume.
+5. Remediation. Keep automated actions conservative and reviewed; prefer pausing
+   or escalating to force operations.
+6. Review. Capture incident notes and feed recurring issues back into CLAUDE.md,
+   hooks, or permission rules.
+
+Output contract:
+
+- Signal set and proposed SLOs tied to real metrics and agent view states.
+- Alert definitions with thresholds and rationale.
+- Incident triage classification and recommended bounded action.
+- Follow-ups to prevent recurrence.
+
+## Features
+
+- Defines fleet signals from OpenTelemetry and agent view.
+- Proposes SLOs and alerts grounded in available metrics.
+- Provides a triage workflow for stuck, looping, or failing sessions.
+- Keeps automated remediation bounded and reviewable.
+
+## Use Cases
+
+- Bring reliability discipline to a fleet of Claude Code agents.
+- Alert on runaway cost or rising error rates across sessions.
+- Triage a session that is stuck needing input or looping.
+- Feed recurring failures back into guardrails and conventions.
+
+## Source Notes
+
+- Claude Code exports usage, cost, and tool-activity signals through
+  OpenTelemetry, providing the metric basis for SLOs and alerts.
+- Agent view shows background sessions grouped by needs-input, working, and
+  completed, giving live fleet state for triage.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for SRE, observability, and reliability
+agents. No agent observability SRE agent exists. This entry is distinct: it is an
+`agents` prompt focused on SRE practices for fleets of Claude Code sessions.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code monitoring and OpenTelemetry docs: https://code.claude.com/docs/en/monitoring-usage
+- Claude Code agent view documentation: https://code.claude.com/docs/en/agent-view
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
