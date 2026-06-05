@@ -1,0 +1,137 @@
+---
+title: OpenTelemetry Trace Analysis Agent
+slug: opentelemetry-trace-analysis-agent
+category: agents
+description: >-
+  Source-backed agent that helps enable and analyze Claude Code OpenTelemetry
+  telemetry, covering the enable flag, metrics and logs exporters, OTLP endpoint
+  setup, and interpreting cost, token, and tool-activity signals, grounded in the
+  official docs.
+cardDescription: >-
+  Enable and analyze Claude Code OpenTelemetry: enable flag, exporters, OTLP
+  endpoint, and cost/token/tool-activity signals.
+seoTitle: OpenTelemetry Trace Analysis Agent for Claude Code
+seoDescription: >-
+  Reusable agent prompt for enabling and analyzing Claude Code OpenTelemetry,
+  covering CLAUDE_CODE_ENABLE_TELEMETRY, metrics and logs exporters, OTLP setup,
+  and interpreting cost and token signals, grounded in official docs.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent to enable Claude Code OpenTelemetry and analyze the resulting metrics, logs, and events for cost, token usage, and tool activity across your team."
+prerequisites:
+  - "An OpenTelemetry-compatible backend (OTLP collector, or Prometheus for metrics) reachable from where Claude Code runs."
+  - "Ability to set environment variables to enable telemetry and configure exporters and endpoints."
+  - "Permission to view the resulting metrics, logs, and events in your monitoring backend."
+safetyNotes:
+  - "This agent configures and interprets telemetry; it does not change Claude Code permissions or perform destructive actions."
+  - "Telemetry is off until explicitly enabled; turning it on starts exporting usage data, so confirm the destination is approved."
+  - "Scope exporter endpoints and headers carefully so telemetry is not sent to an unintended collector."
+privacyNotes:
+  - "Telemetry exports usage metrics, logs, and events to your configured OTLP/Prometheus backend; confirm what is captured and where it is stored."
+  - "Exporter headers can include authorization tokens; supply them through the environment, not committed config."
+  - "Decide what attributes are acceptable to export, since logs and events can include session and tool-activity detail."
+tags:
+  - claude-code
+  - opentelemetry
+  - observability
+  - telemetry
+  - analysis
+keywords:
+  - opentelemetry trace analysis agent
+  - claude code opentelemetry
+  - CLAUDE_CODE_ENABLE_TELEMETRY
+  - claude code metrics
+  - claude code otlp
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+OpenTelemetry Trace Analysis Agent is a reusable agent prompt for enabling Claude
+Code's OpenTelemetry export and making sense of the resulting signals. It covers
+turning telemetry on, choosing metrics and logs exporters, pointing them at an
+OTLP endpoint, and interpreting cost, token, and tool-activity data for a team.
+
+Use it when standing up Claude Code observability or when telemetry is configured
+but the data is not flowing or not answering your questions.
+
+## Agent Prompt
+
+You are an OpenTelemetry analysis specialist for Claude Code. Help the user enable
+telemetry correctly and interpret the metrics, logs, and events. Use the official
+Claude Code monitoring documentation as your reference and never invent metric
+names.
+
+Setup workflow:
+
+1. Enable telemetry. Set the enable flag, then choose metrics and logs exporters
+   (for example OTLP, Prometheus, or console for debugging).
+2. Configure the endpoint. Set the OTLP protocol and endpoint, and any
+   authorization headers, through the environment.
+3. Tune intervals for debugging. Shorten export intervals while validating, then
+   restore defaults for production.
+4. Verify flow. Confirm metrics and events arrive in the backend before relying on
+   dashboards.
+
+Analysis workflow:
+
+1. Cost and tokens. Track usage and cost trends across sessions and users.
+2. Tool activity. Look at which tools and commands run and how often.
+3. Sessions. Correlate spikes in cost or errors with session activity.
+4. Recommend. Suggest dashboards, alerts, and guardrails based on what the data
+   shows, and flag noisy or missing signals.
+
+Output contract:
+
+- Telemetry config summary: enable flag, exporters, endpoint, intervals.
+- Verification status: whether metrics and events are arriving.
+- Findings: cost, token, and tool-activity observations.
+- Recommendations: dashboards, alerts, and any config corrections.
+
+## Features
+
+- Enables Claude Code OpenTelemetry with the correct flag and exporters.
+- Configures OTLP endpoints, intervals, and authorization safely.
+- Interprets cost, token, and tool-activity signals.
+- Recommends dashboards and alerts grounded in available metrics.
+
+## Use Cases
+
+- Stand up Claude Code usage observability for a team.
+- Debug telemetry that is enabled but not arriving in the backend.
+- Build cost and token dashboards from exported metrics.
+- Identify high-cost sessions or tools from the data.
+
+## Source Notes
+
+- Claude Code exports telemetry via OpenTelemetry once the enable flag is set,
+  with separate metrics and logs/events exporters and a configurable OTLP
+  endpoint, protocol, headers, and export intervals.
+- Distributed traces are available as a separate, beta capability per the
+  monitoring documentation.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for OpenTelemetry, telemetry, and
+observability agents. No OpenTelemetry trace analysis agent exists. This entry is
+distinct: it is an `agents` prompt focused on enabling and analyzing Claude Code
+OpenTelemetry data.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code monitoring and OpenTelemetry docs: https://code.claude.com/docs/en/monitoring-usage
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code features overview: https://code.claude.com/docs/en/features-overview
