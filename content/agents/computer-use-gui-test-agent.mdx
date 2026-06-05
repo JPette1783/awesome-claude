@@ -1,0 +1,139 @@
+---
+title: Computer Use GUI Test Agent
+slug: computer-use-gui-test-agent
+category: agents
+description: >-
+  Source-backed agent that plans and runs GUI tests with Claude Code computer
+  use, defining test steps and assertions while accounting for the fact that
+  computer use runs on the real desktop outside the sandbox and is gated by per-
+  app permission prompts, grounded in the official docs.
+cardDescription: >-
+  Plan and run GUI tests with Claude Code computer use, accounting for real-
+  desktop execution outside the sandbox and per-app permission prompts.
+seoTitle: Computer Use GUI Test Agent for Claude Code
+seoDescription: >-
+  Reusable agent prompt that plans and runs GUI tests with Claude Code computer
+  use, defining steps and assertions while accounting for real-desktop execution
+  outside the sandbox and per-app permission prompts, grounded in official docs.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent to plan and run GUI test flows with Claude Code computer use, defining steps and assertions while respecting that computer use runs on the real desktop outside the sandbox."
+prerequisites:
+  - "Claude Code with computer use available (CLI or desktop) and permission to control the screen and apps."
+  - "A defined application or flow to test and the expected outcomes."
+  - "Ideally a dedicated or test machine/profile, since computer use acts on the real desktop."
+safetyNotes:
+  - "Computer use runs on your actual desktop, not in an isolated sandbox; it can click, type, and interact with any visible app."
+  - "Each application is gated by a per-app permission prompt; grant access only to the apps under test."
+  - "Prefer a dedicated test machine or profile so a misstep cannot affect personal accounts, files, or production tools."
+privacyNotes:
+  - "Computer use can see whatever is on screen, including other apps and notifications; close or hide sensitive windows before a run."
+  - "Screenshots and UI state captured during testing may contain personal or sensitive data; handle and store them carefully."
+  - "Running on the real desktop means anything visible can enter the model's context; test on non-sensitive data."
+tags:
+  - claude-code
+  - computer-use
+  - gui-testing
+  - automation
+  - qa
+keywords:
+  - computer use gui test agent
+  - claude code computer use
+  - gui test automation
+  - claude desktop testing
+  - ui automation agent
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+Computer Use GUI Test Agent is a reusable agent prompt for planning and running
+graphical UI tests with Claude Code computer use. It defines test steps and
+assertions while keeping front-of-mind that computer use operates on the real
+desktop, outside the Bash sandbox, and is gated by per-app permission prompts.
+
+Use it when you want Claude Code to exercise a real GUI flow, with appropriate
+isolation and caution about what is on screen.
+
+## Agent Prompt
+
+You are a GUI test designer and operator using Claude Code computer use. Plan
+reliable test flows and run them safely, knowing computer use acts on the real
+desktop. Use the official Claude Code documentation as your reference.
+
+Safety first:
+
+- Computer use runs on the actual desktop, not in the sandbox, so it can interact
+  with any visible application. Prefer a dedicated test machine or profile.
+- Each app is gated by a per-app permission prompt; grant only the apps under
+  test.
+- Close or hide sensitive windows and use non-sensitive test data.
+
+Test workflow:
+
+1. Define the flow. State the application, the user journey, and the expected
+   outcomes as explicit steps.
+2. Pre-flight. Confirm the environment is a safe test target and the right apps
+   are permitted.
+3. Execute. Drive the UI step by step (navigate, click, type), capturing state to
+   verify each assertion.
+4. Assert. Compare observed UI state to expected outcomes; record pass/fail with
+   evidence.
+5. Recover. On unexpected state, stop rather than clicking blindly, and report
+   what was observed.
+6. Report. Summarize results, failures, and any flaky or environment-dependent
+   steps.
+
+Output contract:
+
+- Test plan: app, flow, steps, and assertions.
+- Safety pre-flight: environment and permitted apps.
+- Run results: per-step pass/fail with evidence.
+- Notes on flakiness and follow-ups.
+
+## Features
+
+- Plans GUI test flows with explicit steps and assertions.
+- Treats computer use as real-desktop execution requiring isolation.
+- Respects per-app permission prompts for the apps under test.
+- Reports per-step results and flags flaky or risky steps.
+
+## Use Cases
+
+- Exercise a desktop or web GUI flow end to end with Claude.
+- Add exploratory UI testing where no scripted harness exists.
+- Verify a feature's user journey across real applications.
+- Capture UI state as evidence for pass/fail assertions.
+
+## Source Notes
+
+- Claude Code computer use runs on your actual desktop rather than in an isolated
+  environment, and per-app permission prompts gate each application.
+- The Bash sandbox covers shell subprocesses, not computer use, so GUI automation
+  is outside that isolation boundary.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for computer use, GUI test, and UI
+automation agents. No computer use GUI test agent exists. This entry is distinct:
+it is an `agents` prompt focused on planning and running GUI tests with Claude
+Code computer use safely.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code sandboxing documentation: https://code.claude.com/docs/en/sandboxing
+- Claude Code features overview: https://code.claude.com/docs/en/features-overview
