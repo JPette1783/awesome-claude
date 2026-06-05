@@ -1,0 +1,136 @@
+---
+title: Vertex AI Claude Code Platform Agent
+slug: vertex-ai-claude-code-platform-agent
+category: agents
+description: >-
+  Source-backed agent that helps teams configure and operate Claude Code on
+  Google Cloud Vertex AI, covering provider environment variables, authentication
+  precedence, project, region, and model setup, and least-privilege IAM, grounded
+  in the official Claude Code docs.
+cardDescription: >-
+  Configure and operate Claude Code on Google Cloud Vertex AI: provider env vars,
+  auth precedence, project, region, models, and IAM.
+seoTitle: Vertex AI Claude Code Platform Agent
+seoDescription: >-
+  Reusable agent prompt for running Claude Code on Google Cloud Vertex AI,
+  covering the Vertex provider variable, authentication precedence, project and
+  region setup, model ids, and least-privilege IAM, grounded in official docs.
+author: JPette1783
+authorProfileUrl: "https://github.com/JPette1783"
+submittedBy: JPette1783
+submittedByUrl: "https://github.com/JPette1783"
+dateAdded: "2026-06-05"
+submittedAt: "2026-06-05"
+documentationUrl: "https://code.claude.com/docs/en/skills"
+installable: false
+usageSnippet: "Use this agent when standing up or troubleshooting Claude Code on Google Cloud Vertex AI, to set provider variables, confirm authentication precedence, and keep IAM scoped to least privilege."
+prerequisites:
+  - "A Google Cloud project with Vertex AI enabled and the relevant Claude models available in the target region."
+  - "Application Default Credentials or a service account available to the environment for Vertex calls."
+  - "Claude Code installed, and the ability to set environment variables for the session or CI."
+safetyNotes:
+  - "This agent advises on configuration; it does not provision Google Cloud resources or grant IAM roles itself."
+  - "Recommend least-privilege IAM scoped to the specific Vertex AI model prediction actions, project, and region, not broad project owner access."
+  - "Cloud provider credentials take precedence when the Vertex provider is enabled; confirm the intended project and region before running automation."
+privacyNotes:
+  - "On Vertex AI, prompts and code context are sent to your Google Cloud endpoint and processed under your Google Cloud agreement, project, and region."
+  - "Service account keys and ADC should be supplied through the environment or workload identity, never committed to source control."
+  - "Confirm whether request or audit logging is enabled in your Google Cloud project so you know what is retained."
+tags:
+  - claude-code
+  - vertex-ai
+  - google-cloud
+  - enterprise
+  - configuration
+keywords:
+  - vertex ai claude code platform agent
+  - claude code on vertex ai
+  - CLAUDE_CODE_USE_VERTEX
+  - vertex claude setup
+  - claude code gcp iam
+robotsIndex: true
+robotsFollow: true
+---
+
+## Content
+
+Vertex AI Claude Code Platform Agent is a reusable agent prompt for teams running
+Claude Code against Google Cloud Vertex AI instead of the direct Anthropic API.
+It helps set the provider environment variables, reason about authentication
+precedence, choose project, region, and model identifiers, and keep IAM scoped to
+least privilege.
+
+Use it when onboarding Claude Code to a Vertex-backed environment or when
+diagnosing why a Vertex session is not authenticating or routing to the right
+model, project, or region.
+
+## Agent Prompt
+
+You are a Claude Code on Google Cloud Vertex AI platform specialist. Help the
+user set up and operate Claude Code with Vertex AI as the model provider. Use the
+official Claude Code documentation as your reference, and never invent settings.
+
+Setup checklist:
+
+1. Provider selection. Confirm the Vertex provider environment variable is set so
+   Claude Code routes inference to Vertex AI.
+2. Authentication. Confirm Application Default Credentials or a service account is
+   available. Cloud provider credentials take precedence when the Vertex provider
+   is enabled.
+3. Project, region, model. Set the Google Cloud project, region, and the model
+   identifiers for the main and small/fast models, and confirm the models are
+   available in that region.
+4. IAM. Recommend a least-privilege role scoped to Vertex AI prediction in the
+   target project and region, not broad project-owner access.
+5. Verification. Confirm the active provider and model with the status command
+   and run a small test prompt before enabling automation.
+6. Troubleshooting. For auth failures, check ADC, credential precedence, a stray
+   ANTHROPIC_API_KEY, project/region mismatch, or model availability.
+
+Output contract:
+
+- Environment summary: provider, project, region, model ids, credential source.
+- Findings: misconfiguration, over-broad IAM, project/region/model mismatch.
+- Recommended changes: specific variables and least-privilege IAM scoping.
+- Verification steps and a go/no-go for automation.
+
+## Features
+
+- Configures Claude Code to use Google Cloud Vertex AI as the model provider.
+- Reasons about authentication precedence and credential sources.
+- Recommends least-privilege IAM scoped to Vertex prediction in a project/region.
+- Provides project/region/model verification and troubleshooting steps.
+
+## Use Cases
+
+- Stand up Claude Code on Vertex AI for a Google Cloud organization.
+- Diagnose Vertex authentication or project/region/model routing failures.
+- Tighten IAM permissions for Claude Code's Vertex access.
+- Verify the active provider and model before enabling CI automation.
+
+## Source Notes
+
+- Claude Code supports cloud providers including Google Cloud Vertex AI, selected
+  with a provider environment variable, and cloud provider credentials take
+  precedence in the authentication order when that provider is enabled.
+- Project, region, and model identifiers are configured through environment
+  variables, and the active method can be confirmed with the status command.
+
+## Duplicate Check
+
+The content tree and open PRs were checked for Vertex, Google Cloud, and Claude
+Code platform agents. No Vertex platform agent exists. This entry is distinct: it
+is an `agents` prompt focused on configuring and operating Claude Code on Google
+Cloud Vertex AI with least-privilege IAM.
+
+## Editorial Disclosure
+
+Submitted as an independent community agent entry by `JPette1783`, based on
+public Claude Code documentation. No paid placement, referral, or affiliate
+relationship.
+
+## Sources
+
+- Claude Code skills documentation: https://code.claude.com/docs/en/skills
+- Claude Code features overview: https://code.claude.com/docs/en/features-overview
+- Claude Code authentication and identity docs: https://code.claude.com/docs/en/iam
